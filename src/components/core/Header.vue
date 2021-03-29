@@ -5,11 +5,11 @@
       <button>
         <p>Sign-Up</p>
       </button>
-      <button>
+      <button @click="logIn">
         <p>Login</p>
       </button>
     </div>
-    <div v-if="isLogged">
+    <div v-else-if="isLogged">
       <button>
         <p>Upload</p>
       </button>
@@ -19,10 +19,11 @@
       <button>
         <p>Search</p>
       </button>
-      <button type="button">
+      <button @click="logOut">
         <p>Sign-Out</p>
       </button>
     </div>
+    <!-- {{ isLogged }} -->
   </header>
 </template>
 
@@ -33,11 +34,36 @@ export default {
   components: {
     Logo,
   },
-  data(){
+  data() {
     return {
-      isLogged:false
+      isLogged: false,
+    };
+  },
+  methods: {
+    logOut() {
+      localStorage.setItem("isLog", false);
+      this.isLogged = false;
+    },
+    logIn() {
+      localStorage.setItem("isLog", true);
+      this.isLogged = true;
+    },
+  },
+  computed: {
+    isLoggedUser: function () {
+      console.log(localStorage.getItem("isLog"));
+      return localStorage.getItem("isLog");
+    },
+  },
+  watch: {},
+  beforeMount: function () {
+    if (localStorage.getItem("isLog") == "false") {
+      this.isLogged = false;
     }
-  }
+    if (localStorage.getItem("isLog") == "true") {
+      this.isLogged = true;
+    }
+  },
 };
 </script>
 
