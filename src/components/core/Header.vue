@@ -2,12 +2,16 @@
   <header class="header">
     <Logo />
     <div v-if="!isLogged">
-      <button>
-        <p>Sign-Up</p>
-      </button>
-      <router-link to="/login"> <button @click="logIn">
-        <p>Login</p>
-      </button> </router-link>
+      <router-link to="/register">
+        <button>
+          <p>Sign-Up</p>
+        </button>
+      </router-link>
+      <router-link to="/login">
+        <button @click="logIn">
+          <p>Login</p>
+        </button>
+      </router-link>
     </div>
     <div v-else-if="isLogged">
       <button>
