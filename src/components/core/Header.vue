@@ -5,9 +5,9 @@
       <button>
         <p>Sign-Up</p>
       </button>
-      <button @click="logIn">
+      <router-link to="/login"> <button @click="logIn">
         <p>Login</p>
-      </button>
+      </button> </router-link>
     </div>
     <div v-else-if="isLogged">
       <button>
