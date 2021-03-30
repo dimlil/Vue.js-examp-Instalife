@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Logo from "./Logo";
+import Logo from "../core/Logo.vue";
 export default {
   name: "Header",
   components: {
