@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" v-if="show">
     <Logo />
     <div v-if="!isLogged">
       <router-link to="/register">
@@ -41,6 +41,8 @@ export default {
   data() {
     return {
       isLogged: false,
+      currentLocation: location.pathname,
+      show: true,
     };
   },
   methods: {
@@ -52,6 +54,16 @@ export default {
       localStorage.setItem("isLog", true);
       this.isLogged = true;
     },
+    toggleHeader() {
+      if (
+        this.currentLocation == "/login" ||
+        this.currentLocation == "/register"
+      ) {
+        this.show = false;
+      } else {
+        this.show = true;
+      }
+    },
   },
   computed: {
     isLoggedUser: function () {
@@ -59,7 +71,14 @@ export default {
       return localStorage.getItem("isLog");
     },
   },
-  watch: {},
+  watch: {
+    $route(to, from) {
+      console.log(to);
+      console.log(from);
+      this.currentLocation = to.href;
+      this.toggleHeader();
+    },
+  },
   beforeMount: function () {
     if (localStorage.getItem("isLog") == "false") {
       this.isLogged = false;
