@@ -80,6 +80,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs } from "@vuelidate/validators";
+import { auth } from "../../firebase";
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -96,7 +97,24 @@ export default {
     register() {
       this.v$.$touch();
       if (this.v$.$error) return;
-      console.log("register");
+      auth
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((authUser) => {
+          authUser.user.updateProfile({
+            displayName: this.username,
+          });
+        })
+        .then(() => {
+          localStorage.setItem("isLog", "true");
+          // localStorage.setItem("user", auth.currentUser)
+        })
+        .then(this.$router.push("/"))
+        .catch((error) => {
+          this.$router.push({
+            pathname: "/sign-up",
+          });
+          alert(error.message);
+        });
     },
   },
   validations() {
