@@ -1,4 +1,13 @@
 <template>
+  <div class="errors">
+    <div v-for="(error, index) of v$.$errors" :key="index" class="error">
+      <strong>{{ error.$validator }}</strong>
+      <small> on property </small>
+      <strong>{{ error.$property }}</strong>
+      <small> says: </small>
+      <strong>{{ error.$message }}</strong>
+    </div>
+  </div>
   <form class="form" @submit.prevent="login">
     <div>
       <h1 class="login">Login</h1>
@@ -10,7 +19,12 @@
     </div>
 
     <div>
-      <input type="password" id="inputPassword" name="password" placeholder="Password"/>
+      <input
+        type="password"
+        id="inputPassword"
+        name="password"
+        placeholder="Password"
+      />
       <label htmlFor="inputPassword">Password</label>
     </div>
 
@@ -26,11 +40,29 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import { auth } from "../../firebase.js";
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
   methods: {
     login() {
       console.log("loged");
     },
+  },
+  alidations() {
+    return {
+      username: { required },
+      password: { required },
+    };
   },
 };
 </script>

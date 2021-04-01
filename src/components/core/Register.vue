@@ -61,8 +61,6 @@
         v-model="rePassword"
         @blur="v$.rePassword.$touch"
       />
-      {{ password }}
-      {{ rePassword }}
       <label htmlFor="inputRePassword">Re-Password</label>
     </div>
 
