@@ -1,4 +1,14 @@
 <template>
+  <div class="errors">
+    <div v-for="(error, index) of v$.$errors" :key="index" class="error">
+      <strong>{{ error.$validator }}</strong>
+      <small> on property </small>
+      <strong>{{ error.$property }}</strong>
+      <small> says: </small>
+      <strong>{{ error.$message }}</strong>
+    </div>
+  </div>
+
   <form class="form" @submit.prevent="register">
     <div>
       <h1>Register</h1>
@@ -10,12 +20,23 @@
         type="text"
         name="username"
         placeholder="Username"
+        v-model="username"
+        @blur="v$.username.$touch"
       />
+
       <label htmlFor="inputUsername">Username</label>
+      <!-- {{ username }} -->
     </div>
 
     <div>
-      <input id="inputEmail" type="email" name="email" placeholder="Email" />
+      <input
+        id="inputEmail"
+        type="email"
+        name="email"
+        placeholder="Email"
+        v-model="email"
+        @blur="v$.email.$touch"
+      />
       <label htmlFor="inputEmail">Email</label>
     </div>
 
@@ -25,6 +46,8 @@
         type="password"
         name="password"
         placeholder="Password(Min 6)"
+        v-model="password"
+        @blur="v$.password.$touch"
       />
       <label htmlFor="inputPassword">Password</label>
     </div>
@@ -35,7 +58,11 @@
         type="password"
         name="rePassword"
         placeholder="Re-Password"
+        v-model="rePassword"
+        @blur="v$.rePassword.$touch"
       />
+      {{ password }}
+      {{ rePassword }}
       <label htmlFor="inputRePassword">Re-Password</label>
     </div>
 
@@ -51,11 +78,37 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core";
+import { required, email, minLength, sameAs } from "@vuelidate/validators";
 export default {
+  setup() {
+    return { v$: useVuelidate() };
+  },
+  data() {
+    return {
+      username: "",
+      email: "",
+      password: "",
+      rePassword: "",
+    };
+  },
   methods: {
     register() {
+      this.v$.$touch();
+      if (this.v$.$error) return;
       console.log("register");
     },
+  },
+  validations() {
+    return {
+      username: { required }, // Matches this.username
+      email: { required, email }, // Matches this.email
+      password: { required, minLength: minLength(6) }, // Matches this.password
+      rePassword: { required, sameAs: sameAs(this.password) }, // Matches this.rePassword
+    };
+  },
+  beforeMount() {
+    console.log(this.v$);
   },
 };
 </script>
@@ -139,5 +192,21 @@ form label {
   margin: auto;
   object-fit: contain;
   display: block;
+}
+.errors {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: #ff6241;
+}
+.error {
+  margin: auto;
+  width: 50%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  border: 0px;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: black;
 }
 </style>
