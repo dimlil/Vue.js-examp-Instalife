@@ -51,7 +51,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-// import { auth } from "../../firebase.js";
+import { auth } from "../../firebase.js";
 export default {
   setup() {
     return { v$: useVuelidate() };
@@ -66,7 +66,19 @@ export default {
     login() {
       this.v$.$touch();
       if (this.v$.$error) return;
-      console.log("loged");
+      auth.signInWithEmailAndPassword(this.email, this.password)
+      .then(()=>{
+        localStorage.setItem('isLog', 'true');
+      })
+      .then(()=>{
+        this.$router.push("/")
+      })
+        .catch((error) => {
+          this.$router.push({
+            pathname: "/sign-up",
+          });
+          alert(error.message);
+        });
     },
   },
   validations() {
