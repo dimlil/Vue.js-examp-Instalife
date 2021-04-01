@@ -52,6 +52,7 @@ export default {
       localStorage.setItem("isLog", false);
       localStorage.setItem("user", null);
       this.isLogged = false;
+      this.$router.push("/")
     },
     // logIn() {
     //   localStorage.setItem("isLog", true);
