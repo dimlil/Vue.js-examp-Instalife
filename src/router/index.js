@@ -6,30 +6,46 @@ import ErrorPage from '../components/core/ErrorPage.vue'
 
 const routes = [
     {
-      path: "/",
-      name: "Home",
-      component: Home,
+        path: "/",
+        name: "Home",
+        component: Home,
     },
     {
-      path: "/login",
-      name: "Login",
-      component: Login,
+        path: "/login",
+        name: "Login",
+        component: Login,
     },
     {
-      path: "/register",
-      name: "Register",
-      component: Register,
+        path: "/register",
+        name: "Register",
+        component: Register,
     },
     {
-      path: "/:pathMatch(.*)*",
-      name: "Error",
-      component: ErrorPage,
+        path: "/:pathMatch(.*)*",
+        name: "Error",
+        component: ErrorPage,
     },
-  ];
-  
-  const router = createRouter({
+];
+
+const router = createRouter({
     history: createWebHistory(),
     routes,
-  });
-  
-  export default router;
+});
+
+router.beforeEach((to, from, next) => {
+    const user = localStorage.getItem('user');
+    console.log(user);
+    if (to.path === '/login' && user !== 'null') {
+        next('/');
+        alert("You can't access login page becouse you are logged in")
+    }
+    if (to.path === '/register' && user !== 'null') {
+        next('/');
+        alert("You can't access register page becouse you are logged in")
+    }
+    else {
+        next();
+    }
+})
+
+export default router;
