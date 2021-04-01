@@ -14,7 +14,14 @@
     </div>
 
     <div>
-      <input type="email" id="inputUsername" name="email" placeholder="Email" />
+      <input
+        type="email"
+        id="inputUsername"
+        name="email"
+        placeholder="Email"
+        v-model="email"
+        @blur="v$.email.$touch"
+      />
       <label htmlFor="inputUsername">Email</label>
     </div>
 
@@ -24,6 +31,8 @@
         id="inputPassword"
         name="password"
         placeholder="Password"
+        v-model="password"
+        @blur="v$.password.$touch"
       />
       <label htmlFor="inputPassword">Password</label>
     </div>
@@ -41,26 +50,28 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import { auth } from "../../firebase.js";
+import { required, email } from "@vuelidate/validators";
+// import { auth } from "../../firebase.js";
 export default {
   setup() {
     return { v$: useVuelidate() };
   },
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
     };
   },
   methods: {
     login() {
+      this.v$.$touch();
+      if (this.v$.$error) return;
       console.log("loged");
     },
   },
-  alidations() {
+  validations() {
     return {
-      username: { required },
+      email: { required, email },
       password: { required },
     };
   },
@@ -146,5 +157,21 @@ form label {
   margin: auto;
   object-fit: contain;
   display: block;
+}
+.errors {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: #ff6241;
+}
+.error {
+  margin: auto;
+  width: 50%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  border: 0px;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: black;
 }
 </style>
