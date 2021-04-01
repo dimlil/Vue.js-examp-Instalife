@@ -3,6 +3,7 @@ import Home from '../components/core/Home.vue'
 import Login from '../components/core/Login.vue'
 import Register from '../components/core/Register.vue'
 import ErrorPage from '../components/core/ErrorPage.vue'
+import Profile from '../components/core/Profile.vue'
 
 const routes = [
     {
@@ -19,6 +20,11 @@ const routes = [
         path: "/register",
         name: "Register",
         component: Register,
+    },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: Profile,
     },
     {
         path: "/:pathMatch(.*)*",

@@ -17,9 +17,11 @@
       <button>
         <p>Upload</p>
       </button>
-      <button>
-        <p>Profile</p>
-      </button>
+      <router-link to="/profile">
+        <button>
+          <p>Profile</p>
+        </button>
+      </router-link>
       <button>
         <p>Search</p>
       </button>
@@ -65,14 +67,14 @@ export default {
         this.show = true;
       }
     },
-    checkIsUserLoged(){
+    checkIsUserLoged() {
       if (localStorage.getItem("user") == "null") {
         this.isLogged = false;
       }
       if (localStorage.getItem("user") !== "null") {
         this.isLogged = true;
       }
-    }
+    },
   },
   computed: {
     isLoggedUser: function () {
