@@ -69,7 +69,7 @@ export default {
       auth.signInWithEmailAndPassword(this.email, this.password)
       .then(()=>{
         localStorage.setItem('isLog', 'true');
-        localStorage.setItem("user", auth.currentUser)
+        localStorage.setItem("user", JSON.stringify(auth.currentUser))
       })
       .then(()=>{
         this.$router.push("/")
