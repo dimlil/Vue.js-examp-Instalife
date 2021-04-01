@@ -50,10 +50,10 @@ export default {
       localStorage.setItem("isLog", false);
       this.isLogged = false;
     },
-    logIn() {
-      localStorage.setItem("isLog", true);
-      this.isLogged = true;
-    },
+    // logIn() {
+    //   localStorage.setItem("isLog", true);
+    //   this.isLogged = true;
+    // },
     toggleHeader() {
       if (
         this.currentLocation == "/login" ||
