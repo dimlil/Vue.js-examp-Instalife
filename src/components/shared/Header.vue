@@ -48,6 +48,7 @@ export default {
   methods: {
     logOut() {
       localStorage.setItem("isLog", false);
+      localStorage.setItem("user", null);
       this.isLogged = false;
     },
     // logIn() {
@@ -64,6 +65,14 @@ export default {
         this.show = true;
       }
     },
+    checkIsUserLoged(){
+      if (localStorage.getItem("user") == "null") {
+        this.isLogged = false;
+      }
+      if (localStorage.getItem("user") !== "null") {
+        this.isLogged = true;
+      }
+    }
   },
   computed: {
     isLoggedUser: function () {
@@ -77,6 +86,7 @@ export default {
       console.log(from);
       this.currentLocation = to.href;
       this.toggleHeader();
+      this.checkIsUserLoged();
     },
   },
   beforeMount: function () {

@@ -104,7 +104,7 @@ export default {
         })
         .then(() => {
           localStorage.setItem("isLog", "true");
-          // localStorage.setItem("user", auth.currentUser)
+          localStorage.setItem("user", auth.currentUser)
         })
         .then(this.$router.push("/"))
         .catch((error) => {
