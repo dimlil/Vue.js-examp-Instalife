@@ -31,7 +31,8 @@ export default {
     },
   },
   beforeMount: async function () {
-    await db
+    if (window.location.pathname=='/') {
+      await db
       .collection("posts")
       .orderBy("timestamp", "desc")
       .get()
@@ -41,6 +42,21 @@ export default {
       });
     //   console.log(this.posts[0]);
     this.posts = this.posts[0];
+    }
+    if (window.location.pathname=='/profile') {
+      const objFromLocalStorageAsAString=localStorage.getItem('user');
+      const user=JSON.parse(objFromLocalStorageAsAString);
+      await db
+      .collection("posts").where('email','==',user.email)
+      .orderBy("timestamp", "desc")
+      .get()
+      .then((querySnapshot) => {
+        const documents = querySnapshot.docs.map((doc) => doc.data());
+        this.posts.push(documents);
+      });
+    //   console.log(this.posts[0]);
+    this.posts = this.posts[0];
+    }
   },
 };
 </script>
