@@ -43,11 +43,15 @@ router.beforeEach((to, from, next) => {
     console.log(user);
     if (to.path === '/login' && user !== 'null') {
         next('/');
-        alert("You can't access login page becouse you are logged in")
+        alert("You can't access login page because you are logged in!")
     }
     if (to.path === '/register' && user !== 'null') {
         next('/');
-        alert("You can't access register page becouse you are logged in")
+        alert("You can't access register page because you are logged in!")
+    }
+    if (to.path === '/profile' && user === 'null') {
+        next('/');
+        alert("You can't access profile page because you are not logged in. Please login or register!")
     }
     else {
         next();
