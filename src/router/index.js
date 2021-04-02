@@ -6,6 +6,7 @@ import ErrorPage from '../components/core/ErrorPage.vue'
 import Profile from '../components/core/Profile.vue'
 import UploadPage from '../components/core/UploadPage.vue'
 import Search from '../components/core/Search.vue'
+import Image from '../components/shared/Image.vue'
 
 const routes = [
     {
@@ -37,6 +38,11 @@ const routes = [
         path: "/search",
         name: "Search",
         component: Search,
+    },
+    {
+        path: "/image/:id",
+        name: "Image",
+        component: Image,
     },
     {
         path: "/:pathMatch(.*)*",

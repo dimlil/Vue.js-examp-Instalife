@@ -5,16 +5,17 @@
       <img class="avatar" src="../../assets/avatar.jpg" alt="avatar" />
       <h3>{{ post.username }}</h3>
     </div>
-    <router-link to="/image/post.imgUrl">
-      <img class="postImage" alt="post-image" :src="post.imgUrl" />
-    </router-link>
+    <img class="postImage" alt="post-image" :src="post.imgUrl" @click="parseLinkAndRedirect(post.imgUrl)" style="cursor: pointer;"/>
     <h4 class="postText">
       <strong>{{ post.username }}</strong
       >: {{ post.caption }}
     </h4>
   </div>
   <div v-if="postNotFound">
-    <h1>Noting Found! To add post: <router-link to="/upload">Click Here</router-link></h1>
+    <h1>
+      Noting Found! To add post:
+      <router-link to="/upload">Click Here</router-link>
+    </h1>
   </div>
 </template>
 
@@ -36,6 +37,10 @@ export default {
     postsShow() {
       console.log(this.posts);
     },
+    parseLinkAndRedirect(link){
+      const ecodedLink=encodeURIComponent(link)
+      this.$router.push(`/image/${ecodedLink}`)
+    }
   },
   beforeMount: async function () {
     if (window.location.pathname == "/") {
