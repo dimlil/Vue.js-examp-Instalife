@@ -59,6 +59,10 @@ router.beforeEach((to, from, next) => {
         next('/');
         alert("You can't access profile page because you are not logged in. Please login or register!")
     }
+    if (to.path === '/upload' && user === 'null') {
+        next('/');
+        alert("You can't access upload page because you are not logged in. Please login or register!")
+    }
     else {
         next();
     }
