@@ -104,9 +104,11 @@ export default {
         })
         .then(() => {
           localStorage.setItem("isLog", "true");
-          localStorage.setItem("user", JSON.stringify(auth.currentUser))
+          localStorage.setItem("user", JSON.stringify(auth.currentUser));
         })
-        .then(this.$router.push("/"))
+        .then(() => {
+          this.$router.push("/");
+        })
         .catch((error) => {
           this.$router.push({
             pathname: "/sign-up",
