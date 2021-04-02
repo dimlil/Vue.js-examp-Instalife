@@ -14,9 +14,11 @@
       </router-link>
     </div>
     <div v-else-if="isLogged">
-      <button>
-        <p>Upload</p>
-      </button>
+      <router-link to="/upload"
+        ><button>
+          <p>Upload</p>
+        </button></router-link
+      >
       <router-link to="/profile">
         <button>
           <p>Profile</p>
@@ -52,7 +54,7 @@ export default {
       localStorage.setItem("isLog", false);
       localStorage.setItem("user", null);
       this.isLogged = false;
-      this.$router.push("/")
+      this.$router.push("/");
     },
     // logIn() {
     //   localStorage.setItem("isLog", true);
