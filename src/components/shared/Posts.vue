@@ -5,7 +5,7 @@
       <img class="avatar" src="../../assets/avatar.jpg" alt="avatar" />
       <h3>{{ post.username }}</h3>
     </div>
-    <img class="postImage" alt="post-image" :src="post.imgUrl" @click="parseLinkAndRedirect(post.imgUrl)" style="cursor: pointer;"/>
+    <img class="postImage" alt="post-image" :src="post.imgUrl" @click="parseLinkAndRedirect(post.imgUrl)" :style="{cursor: cursorType}"/>
     <h4 class="postText">
       <strong>{{ post.username }}</strong
       >: {{ post.caption }}
@@ -31,6 +31,7 @@ export default {
         // {username: 'pesho', caption: 'hey', imgUrl:"asf"}
       ],
       postNotFound: false,
+      cursorType: 'pointer',
     };
   },
   methods: {
