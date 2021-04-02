@@ -18,7 +18,6 @@
 
     <button class="btn" type="submit" @click="search">Search</button>
   </form>
-  {{tags}}
   <posts v-if="show" :tagsFromSearch="tags" />
 </template>
 

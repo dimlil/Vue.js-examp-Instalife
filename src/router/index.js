@@ -52,7 +52,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const user = localStorage.getItem('user');
-    console.log(user);
     if (to.path === '/login' && user !== 'null') {
         next('/');
         alert("You can't access login page because you are logged in!")
