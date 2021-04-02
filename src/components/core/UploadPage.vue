@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { db,storage } from "../../firebase.js";
+import firebase from "firebase";
+import { db, storage } from "../../firebase.js";
 export default {
   data() {
     return {
@@ -53,36 +53,39 @@ export default {
       //   console.log(this.file);
       //   console.log(this.tags);
       //   console.log(this.caption);
-         storage.ref(`images/${this.file.name}`).put(this.file).on(
-        "state_changed",
-        (snapshot) => {
+      storage
+        .ref(`images/${this.file.name}`)
+        .put(this.file)
+        .on(
+          "state_changed",
+          (snapshot) => {
             console.log(snapshot);
-        },
-        (err) => {
-          console.log(err);
-          alert(err.message)
-        },
-        () => {
-          //when that complite that will execute
-          storage
-            .ref('images')
-            .child(this.file.name)
-            .getDownloadURL()
-            .then((url) => {
-              db.collection('posts').add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),//upload img in top of db and home page
-                caption: this.caption,
-                tags: this.tags,
-                imgUrl: url,
-                username: user.displayName,
-                email: user.email
+          },
+          (err) => {
+            console.log(err);
+            alert(err.message);
+          },
+          () => {
+            //when that complite that will execute
+            storage
+              .ref("images")
+              .child(this.file.name)
+              .getDownloadURL()
+              .then((url) => {
+                db.collection("posts").add({
+                  timestamp: firebase.firestore.FieldValue.serverTimestamp(), //upload img in top of db and home page
+                  caption: this.caption,
+                  tags: this.tags,
+                  imgUrl: url,
+                  username: user.displayName,
+                  email: user.email,
+                });
               })
-            })
-            .then(() => {
-              this.$router.push("/")
-            })
-        }
-      )
+              .then(() => {
+                this.$router.push("/");
+              });
+          }
+        );
     },
     getFile(event) {
       if (event.target.files.length == 0) {
