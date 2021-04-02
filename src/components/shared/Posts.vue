@@ -13,16 +13,23 @@
       >: {{ post.caption }}
     </h4>
   </div>
+  <div v-if="postNotFound">
+    <h1>Noting Found! To add post: <router-link to="/upload">Click Here</router-link></h1>
+  </div>
 </template>
 
 <script>
 import { db } from "../../firebase.js";
 export default {
+  props: {
+    tagsFromSearch: String,
+  },
   data() {
     return {
       posts: [
         // {username: 'pesho', caption: 'hey', imgUrl:"asf"}
       ],
+      postNotFound: false,
     };
   },
   methods: {
@@ -31,32 +38,58 @@ export default {
     },
   },
   beforeMount: async function () {
-    if (window.location.pathname=='/') {
+    if (window.location.pathname == "/") {
       await db
-      .collection("posts")
-      .orderBy("timestamp", "desc")
-      .get()
-      .then((querySnapshot) => {
-        const documents = querySnapshot.docs.map((doc) => doc.data());
-        this.posts.push(documents);
-      });
-    //   console.log(this.posts[0]);
-    this.posts = this.posts[0];
+        .collection("posts")
+        .orderBy("timestamp", "desc")
+        .get()
+        .then((querySnapshot) => {
+          const documents = querySnapshot.docs.map((doc) => doc.data());
+          this.posts.push(documents);
+        });
+      //   console.log(this.posts[0]);
+      this.posts = this.posts[0];
     }
-    if (window.location.pathname=='/profile') {
-      const objFromLocalStorageAsAString=localStorage.getItem('user');
-      const user=JSON.parse(objFromLocalStorageAsAString);
+    if (window.location.pathname == "/profile") {
+      const objFromLocalStorageAsAString = localStorage.getItem("user");
+      const user = JSON.parse(objFromLocalStorageAsAString);
       await db
-      .collection("posts").where('email','==',user.email)
-      .orderBy("timestamp", "desc")
-      .get()
-      .then((querySnapshot) => {
-        const documents = querySnapshot.docs.map((doc) => doc.data());
-        this.posts.push(documents);
-      });
-    //   console.log(this.posts[0]);
-    this.posts = this.posts[0];
+        .collection("posts")
+        .where("email", "==", user.email)
+        .orderBy("timestamp", "desc")
+        .get()
+        .then((querySnapshot) => {
+          const documents = querySnapshot.docs.map((doc) => doc.data());
+          this.posts.push(documents);
+        });
+      //   console.log(this.posts[0]);
+      this.posts = this.posts[0];
     }
+  },
+  created: async function () {
+    if (window.location.pathname == "/search") {
+      console.log();
+      await db
+        .collection("posts")
+        .where("tags", "==", this.$parent.tags)
+        .orderBy("timestamp", "desc")
+        .get()
+        .then((querySnapshot) => {
+          const documents = querySnapshot.docs.map((doc) => doc.data());
+          console.log(documents);
+          this.posts.push(documents);
+        });
+      this.posts = this.posts[0];
+    }
+  },
+  watch: {
+    posts() {
+      if (this.posts.length == 0) {
+        this.postNotFound = true;
+      } else {
+        this.postNotFound = false;
+      }
+    },
   },
 };
 </script>
