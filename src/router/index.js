@@ -5,6 +5,7 @@ import Register from '../components/core/Register.vue'
 import ErrorPage from '../components/core/ErrorPage.vue'
 import Profile from '../components/core/Profile.vue'
 import UploadPage from '../components/core/UploadPage.vue'
+import Search from '../components/core/Search.vue'
 
 const routes = [
     {
@@ -31,6 +32,11 @@ const routes = [
         path: "/upload",
         name: "Upload",
         component: UploadPage,
+    },
+    {
+        path: "/search",
+        name: "Search",
+        component: Search,
     },
     {
         path: "/:pathMatch(.*)*",

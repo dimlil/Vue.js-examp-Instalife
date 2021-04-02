@@ -24,9 +24,11 @@
           <p>Profile</p>
         </button>
       </router-link>
-      <button>
-        <p>Search</p>
-      </button>
+      <router-link to="/search"
+        ><button>
+          <p>Search</p>
+        </button></router-link
+      >
       <button @click="logOut">
         <p>Sign-Out</p>
       </button>
