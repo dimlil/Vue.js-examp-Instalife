@@ -1,10 +1,10 @@
 <template>
   <div class="errors">
     <div v-for="(error, index) of v$.$errors" :key="index" class="error">
-      <strong>{{ error.$validator }}</strong>
-      <small> on property </small>
+      <!-- <strong>{{ error.$validator }}</strong>
+      <small> on property </small> -->
       <strong>{{ error.$property }}</strong>
-      <small> says: </small>
+      <small> field says: </small>
       <strong>{{ error.$message }}</strong>
     </div>
   </div>
