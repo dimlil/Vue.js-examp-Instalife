@@ -13,7 +13,7 @@
   </div>
   <div v-if="postNotFound">
     <h1>
-      Noting Found! To add post:
+      Nothing Found! To add post:
       <router-link to="/upload">Click Here</router-link>
     </h1>
   </div>

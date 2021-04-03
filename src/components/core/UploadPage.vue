@@ -158,7 +158,7 @@ input {
   display: block;
   color: #fa8a72;
 }
-label {
+/* label {
   margin-left: 45%;
-}
+} */
 </style>
